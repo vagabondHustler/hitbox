@@ -120,9 +120,7 @@ hid_report_t report;
 hid_report_t prevReport;
 
 void dpad(bool up, bool down, bool left, bool right) {
-  if (up && down) {
-    up = down = true;
-  }
+
   if (left && right) {
     left = right = false;
   }
@@ -130,6 +128,7 @@ void dpad(bool up, bool down, bool left, bool right) {
   switch (stickMode) {
     case 0:
       if (up && !right && !left) report.dpadHat = 0;
+      if (up && down) report.dpadHat = 0;
       else if (up && right) report.dpadHat = 1;
       else if (right && !up && !down) report.dpadHat = 2;
       else if (right && down) report.dpadHat = 3;
@@ -187,7 +186,7 @@ void setup() {
 
   memset(&report, 0, sizeof(report));
   report.dpadHat = 0x0f;
-  report.accelerometerXAxis = 0x02; /
+  report.accelerometerXAxis = 0x02; 
   report.accelerometerYAxis = 0x02;
   report.accelerometerZAxis = 0x02;
   report.gyroscopeAxis = 0x02;
